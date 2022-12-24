@@ -8,6 +8,11 @@ dotenv.config();
 
 // routes config
 const mainRouter = require('./routes/routes');
+
+// models
+const User = require('./models/User');
+const Product = require('./models/Product');
+
 // database connection
 const connection = require('../config/database/Connection');
 // middleware 
