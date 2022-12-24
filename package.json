@@ -1,0 +1,29 @@
+{
+  "name": "electronics-api",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "description": "api de eletronicos",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thiagodev777/electronics-api.git"
+  },
+  "keywords": [],
+  "author": "Antonio Thiago",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thiagodev777/electronics-api/issues"
+  },
+  "homepage": "https://github.com/Thiagodev777/electronics-api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.28.0"
+  }
+}
