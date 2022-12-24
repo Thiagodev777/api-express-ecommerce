@@ -26,5 +26,4 @@ server.use(cors());
 // routes
 server.use(mainRouter)
 
-
 server.listen(process.env.PORT, () => console.log('run'))

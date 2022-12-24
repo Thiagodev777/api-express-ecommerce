@@ -1,15 +1,19 @@
-router.get('/users', (req, res) => {
-    res.send('ROTA DE TODOS OS USUARIO')
-})
-router.get('/user/:id', (req, res) => {
-    res.send('ROTA DE UM PRODUTO USUARIO')
-})
-router.post('/user', (req, res) => {
-    res.send('ROTA DE CADASTRAR NOVO USUARIO')
-})
-router.put('/user/:id', (req, res) => {
-    res.send('ROTA DE ATUALIZAR UM USUARIO')
-})
-router.delete('user/:id', (req, res) => {
-    res.send('ROTA DE DELETAR UM USUARIO')
-})
+const userController = {
+    async getUsers(req, res) {
+        
+    },
+    async getUser(req, res) {
+
+    },
+    async createUser(req, res) {
+
+    },
+    async updateUser(req, res) {
+
+    },
+    async deleteUser(req, res) {
+
+    }
+}
+
+module.exports = userController;
