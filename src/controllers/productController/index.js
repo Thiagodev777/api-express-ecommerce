@@ -83,66 +83,12 @@ const productController = {
       let product = await Product.findOne({ where: { id: id } });
       if (product) {
         if(name || description || price || quantity || image) {
-            if(name){
-                if(typeof name === 'string'){
-                    try {
-                        Product.update({ name }, { where: { id: id } });
-                        return res.status(200).json({ msg: "successfully updated" })
-                      } catch (err) {
-                        return res.status(500).json({ error: "internal error" })
-                      }
-                } else {
-                    return res.status(400).json({ error: "invalid data" })
-                }
-            }  
-            if(description){
-                if(typeof description === 'string'){
-                    try {
-                        Product.update({ description }, { where: { id: id } });
-                        return res.status(200).json({ msg: "successfully updated" })
-                      } catch (err) {
-                        return res.status(500).json({ error: "internal error" })
-                      }
-                } else {
-                    return res.status(400).json({ error: "invalid data" })
-                }
-            }
-            if(price){
-                if(typeof price === 'string'){
-                    try {
-                        Product.update({ price }, { where: { id: id } });
-                        return res.status(200).json({ msg: "successfully updated" })
-                      } catch (err) {
-                        return res.status(500).json({ error: "internal error" })
-                      }
-                } else {
-                    return res.status(400).json({ error: "invalid data" })
-                }
-            }
-            if(quantity){
-                if(typeof quantity === 'string'){
-                    try {
-                        Product.update({ quantity }, { where: { id: id } });
-                        return res.status(200).json({ msg: "successfully updated" })
-                      } catch (err) {
-                        return res.status(500).json({ error: "internal error" })
-                      }
-                } else {
-                    return res.status(400).json({ error: "invalid data" })
-                }
-            }
-            if(image){
-                if(typeof image === 'string'){
-                    try {
-                        Product.update({ image }, { where: { id: id } });
-                        return res.status(200).json({ msg: "successfully updated" })
-                      } catch (err) {
-                        return res.status(500).json({ error: "internal error" })
-                      }
-                } else {
-                    return res.status(400).json({ error: "invalid data" })
-                }
-            }
+          try {
+            Product.update({ name, description, price, quantity, image }, { where: { id: id } });
+            return res.status(200).json({ msg: "successfully updated" })
+          } catch (err) {
+            return res.status(500).json({ error: "internal error" })
+          }
         } else {
             return res.status(400).json({ error: "invalid data" })
         }
