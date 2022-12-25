@@ -1,32 +1,37 @@
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 const Datatypes = Sequelize.DataTypes;
-const sequelize = require('../../config/database/Connection');
+const sequelize = require("../../config/database/Connection");
 
-const Product = sequelize.define('Product', {
+const Product = sequelize.define(
+  "Product",
+  {
     name: {
-        type: Datatypes.STRING,
-        allowNull: false,
+      type: Datatypes.STRING,
+      allowNull: false,
+      unique: true,
     },
     description: {
-        type: Datatypes.TEXT,
-        allowNull: false,
+      type: Datatypes.TEXT,
+      allowNull: false,
     },
     price: {
-        type: Datatypes.FLOAT,
-        allowNull: false
+      type: Datatypes.STRING,
+      allowNull: false,
     },
     quantity: {
-        type: Datatypes.INTEGER,
-        allowNull: false
+      type: Datatypes.STRING,
+      allowNull: false,
     },
     image: {
-        type: Datatypes.TEXT,
-        allowNull: false
-    }
-}, {
-    tableName: 'products',
-    timestamps: false
-})
+      type: Datatypes.TEXT,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: "products",
+    timestamps: false,
+  }
+);
 
 Product.sync({ force: false });
 
