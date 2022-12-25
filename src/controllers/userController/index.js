@@ -6,7 +6,7 @@ const userController = {
     try {
       res.statusCode = 200;
       let users = await User.findAll();
-      res.json(users);
+      res.json({userLogged: req.userLogged, users});
     } catch (err) {
       res.statusCode = 500;
       res.json({ error: "internal error" });
