@@ -26,4 +26,9 @@ server.use(cors());
 // routes
 server.use(mainRouter)
 
+
+server.use((req, res) => {
+    res.sendStatus(404);
+})
+
 server.listen(process.env.PORT, () => console.log('run'))

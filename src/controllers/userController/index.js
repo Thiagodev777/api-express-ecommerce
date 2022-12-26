@@ -1,154 +1,128 @@
-// model
 const User = require("../../models/User");
+const Helpers = require("../../helpers/index");
 
 const userController = {
   async getUsers(req, res) {
+    const userLogged = req.userLogged;
     try {
-      res.statusCode = 200;
-      let users = await User.findAll();
-      res.json({userLogged: req.userLogged, users});
+      const users = await User.findAll();
+      return res.status(200).json({ userLogged: userLogged, users });
     } catch (err) {
-      res.statusCode = 500;
-      res.json({ error: "internal error" });
+      console.log(err);
+      return res.status(500).json({ error: "internal error" });
     }
   },
   async getUser(req, res) {
-    let { id } = req.params;
-    if (isNaN(id)) {
-      res.statusCode = 400;
-      res.json({ error: "invalid data" });
-    } else {
-      try {
-        let user = await User.findOne({ where: { id: id } });
-        if (user) {
-          res.statusCode = 200;
-          res.json(user);
-        } else {
-          res.statusCode = 404;
-          res.json({ error: "not found" });
+    const { id } = req.params;
+    if (id) {
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "invalid data" });
+      } else {
+        try {
+          const user = await User.findOne({ where: { id: id } });
+          if (user) {
+            return res.status(200).json(user);
+          } else {
+            return res.status(404).json({ error: "not found" });
+          }
+        } catch (err) {
+          console.log(err);
+          return res.status(500).json({ error: "internal error" });
         }
-      } catch (err) {
-        res.statusCode = 500;
-        res.json({ error: "internal error" });
       }
+    } else {
+      return res.status(400).json({ error: "invalid data" });
     }
   },
   async createUser(req, res) {
-    let { name, email, password } = req.body;
+    const { name, email, password } = req.body;
     if (name && email && password) {
-      if (
-        typeof name === "string" &&
-        typeof email === "string" &&
-        typeof password === "string"
-      ) {
-        let duplicateEmail = await User.findOne({ where: { email: email } });
-        if (duplicateEmail) {
-          res.statusCode = 400;
-          res.json({ error: "The email already exists" });
-        } else {
-          try {
-            res.statusCode = 200;
-            let user = await User.create({ name, email, password });
-            res.json({ msg: "successfully created" });
-          } catch (err) {
-            res.statusCode = 500;
-            res.json({ error: "internal error" });
+      if (Helpers.typeCheckingUser(name, email, password)) {
+        try {
+          const duplicateEmail = await User.findOne({
+            where: { email: email },
+          });
+          if (duplicateEmail) {
+            return res.status(400).json({ error: "The email already exists" });
+          } else {
+            try {
+              const user = await User.create({ name, email, password });
+              return res.status(200).json({ msg: "successfully created" });
+            } catch (err) {
+              console.log(err);
+              return res.status(500).json({ error: "internal error" });
+            }
           }
+        } catch (err) {
+          console.log(err);
+          return res.status(500).json({ error: "internal error" });
         }
       } else {
-        res.statusCode = 400;
-        res.json({ error: "invalid data" });
+        return res.status(400).json({ error: "invalid data" });
       }
     } else {
-      res.statusCode = 400;
-      res.json({ error: "invalid data" });
+      return res.status(400).json({ error: "invalid data" });
     }
   },
   async updateUser(req, res) {
-    let { id } = req.params;
-    let { name, email, password } = req.body;
-    if (isNaN(id)) {
-      res.statusCode = 400;
-      res.json({ error: "invalid data" });
-    } else {
-      let user = await User.findOne({ where: { id: id } });
-      if (user) {
-        if (name || email || password) {
-          if (name) {
-            if (typeof name === "string") {
-              try {
-                res.statusCode = 200;
-                User.update({ name }, { where: { id: id } });
-                res.json({ msg: "successfully updated" });
-              } catch (err) {
-                res.statusCode = 500;
-                res.json({ error: "internal error" });
-              }
-            } else {
-              res.statusCode = 400;
-              res.json({ error: "invalid data" });
-            }
-          }
-          if (email) {
-            if (typeof email === "string") {
-              try {
-                res.statusCode = 200;
-                User.update({ email }, { where: { id: id } });
-                res.json({ msg: "successfully updated" });
-              } catch (err) {
-                res.statusCode = 500;
-                res.json({ error: "internal error" });
-              }
-            } else {
-              res.statusCode = 400;
-              res.json({ error: "invalid data" });
-            }
-          }
-          if (password) {
-            if (typeof password === "string") {
-              try {
-                res.statusCode = 200;
-                User.update({ password }, { where: { id: id } });
-                res.json({ msg: "successfully updated" });
-              } catch (err) {
-                res.statusCode = 500;
-                res.json({ error: "internal error" });
-              }
-            } else {
-              res.statusCode = 400;
-              res.json({ error: "invalid data" });
-            }
-          }
-        } else {
-          res.statusCode = 400;
-          res.json({ error: "invalid data" });
-        }
+    const { id } = req.params;
+    const { name, email, password } = req.body;
+    if (id) {
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "invalid data" });
       } else {
-        res.statusCode = 404;
-        res.json({ error: "not found" });
+        try {
+          const user = await User.findOne({ where: { id: id } });
+          if (user) {
+            if (name || email || password) {
+              try {
+                User.update({ name, email, password }, { where: { id: id } });
+                return res.status(200).json({ msg: "successfully updated" });
+              } catch (err) {
+                console.log(err);
+                return res.status(500).json({ error: "internal error" });
+              }
+            } else {
+              return res.status(400).json({ error: "invalid data" });
+            }
+          } else {
+            return res.status(404).json({ error: "not found" });
+          }
+        } catch (err) {
+          console.log(err);
+          return res.status(500).json({ error: "internal error" });
+        }
       }
+    } else {
+      return res.status(400).json({ error: "invalid data" });
     }
   },
   async deleteUser(req, res) {
-    let { id } = req.params;
-    if (isNaN(id)) {
-      res.statusCode = 400;
-      res.json({ error: "invalid data" });
-    } else {
-      let user = await User.findOne({ where: { id: id } });
-      if (user) {
-        try {
-          res.statusCode = 200;
-          let userDelete = await User.destroy({ where: { id: id } });
-          res.json({ msg: "successfully deleted" });
-        } catch (err) {
-          res.statusCode = 500;
-          res.json({ error: "internal error" });
-        }
+    const { id } = req.params;
+    if (id) {
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "invalid data" });
       } else {
-        res.statusCode = 404;
-        res.json({ error: "not found" });
+        try {
+          const user = await User.findOne({ where: { id: id } });
+          if (user) {
+            try {
+              const userDelete = await User.destroy({ where: { id: id } });
+              return res.status(200).json({ msg: "successfully deleted" });
+            } catch (err) {
+              console.log(err);
+              return res.status(500).json({ error: "internal error" });
+            }
+          } else {
+            return res.status(404).json({ error: "not found" });
+          }
+        } catch (err) {
+          console.log(err);
+          return res.status(500).json({ error: "internal error" });
+        }
       }
+    } else {
+      return res.status(400).json({ error: "invalid data" });
     }
   },
 };

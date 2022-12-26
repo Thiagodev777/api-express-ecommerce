@@ -13,11 +13,11 @@ const loginController = require('../controllers/loginController/index')
 router.post('/auth', loginController.authenticate)
 
 // routes user
-router.get('/users', auth, userController.getUsers)
-router.get('/user/:id', auth, userController.getUser)
-router.post('/user', auth, userController.createUser)
-router.put('/user/:id', auth, userController.updateUser)
-router.delete('/user/:id', auth, userController.deleteUser)
+router.get('/users',userController.getUsers)
+router.get('/user/:id',userController.getUser)
+router.post('/user',userController.createUser)
+router.put('/user/:id',userController.updateUser)
+router.delete('/user/:id',userController.deleteUser)
 
 // routes product
 router.get('/products', productController.getProducts)
