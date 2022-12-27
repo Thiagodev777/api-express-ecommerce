@@ -1,25 +1,29 @@
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 const Datatypes = Sequelize.DataTypes;
-const sequelize = require('../../config/database/Connection');
+const sequelize = require("../../config/database/Connection");
 
-const User = sequelize.define('User', {
+const User = sequelize.define(
+  "User",
+  {
     name: {
-        type: Datatypes.STRING,
-        allowNull: false
+      type: Datatypes.STRING,
+      allowNull: false,
     },
     email: {
-        type: Datatypes.STRING,
-        allowNull: false,
-        unique: true
+      type: Datatypes.STRING,
+      allowNull: false,
+      unique: true,
     },
     password: {
-        type: Datatypes.STRING,
-        allowNull: false
-    }
-}, {
-    tableName: 'users',
-    timestamps: false
-})
+      type: Datatypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: "users",
+    timestamps: false,
+  }
+);
 
 User.sync({ force: false });
 

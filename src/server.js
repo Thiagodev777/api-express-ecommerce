@@ -6,29 +6,25 @@ const cors = require('cors');
 const server = express();
 dotenv.config();
 
-// routes config
+// Routes
 const mainRouter = require('./routes/routes');
 
-// models
+// Models
 const User = require('./models/User');
 const Product = require('./models/Product');
 
-// database connection
+// settings database and middleware
 const connection = require('../config/database/Connection');
-// middleware 
 const auth = require('../config/middleware/Auth');
-// server config
+
 server.use(express.urlencoded({extended: false}));
 server.use(express.json());
 server.use(express.static(path.join(__dirname, '../public')));
 server.use(cors());
 
-// routes
 server.use(mainRouter)
-
 
 server.use((req, res) => {
     res.sendStatus(404);
 })
-
-server.listen(process.env.PORT, () => console.log('run'))
+server.listen(process.env.PORT, () => console.log(`server running`))

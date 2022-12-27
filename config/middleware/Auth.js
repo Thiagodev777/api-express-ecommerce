@@ -8,18 +8,18 @@ const auth = (req, res, next) => {
     const token = bearer[1];
     jwt.verify(token, JWTSECRET, (err, data) => {
       if (err) {
-        res.statusCode = 401;
-        res.json({ error: "invalid token" });
+        console.log(err);
+        return res.status(401).json({ error: "invalid token" });
       } else {
-        res.statusCode = 200;
+        res.status(200);
         req.token = token;
         req.userLogged = { id: data.id, name: data.name, email: data.email };
         next();
       }
     });
   } else {
-    res.statusCode = 401;
-    res.json({ error: "authentication required" });
+    return res.status(401).json({ error: "authentication required" });
   }
 };
+
 module.exports = auth;
