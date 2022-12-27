@@ -1,8 +1,8 @@
 {
-  "name": "electronics-api",
+  "name": "api-express-ecommerce", 
   "version": "1.0.0",
   "type": "commonjs",
-  "description": "api de eletronicos",
+  "description": "Api de E-commerce com gerenciamento de usuarios",
   "main": "server.js",
   "scripts": {
     "start": "nodemon src/server.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Thiagodev777/electronics-api.git"
+    "url": "git+https://github.com/Thiagodev777/api-express-ecommerce.git"
   },
   "keywords": [],
   "author": "Antonio Thiago",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Thiagodev777/electronics-api/issues"
+    "url": "https://github.com/Thiagodev777/api-express-ecommerce/issues"
   },
-  "homepage": "https://github.com/Thiagodev777/electronics-api#readme",
+  "homepage": "https://github.com/Thiagodev777/api-express-ecommerce#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
